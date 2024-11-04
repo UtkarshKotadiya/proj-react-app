@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <div id="main-home-content">
       <section id="home-page-img">
-        <img src="/proj_imgs/HP1.5.png" alt="Left Main" id="left-main-img" />
+        <img src={`${process.env.PUBLIC_URL}/proj_imgs/HP1.5.png`} alt="Left Main" id="left-main-img" />
         <img src="/proj_imgs/HP1.png" alt="Right Main" id="right-main-img" />
       </section>
 
