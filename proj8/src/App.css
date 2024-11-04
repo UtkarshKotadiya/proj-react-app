@@ -1,0 +1,42 @@
+/* App.css */
+
+/* Structure */
+
+:root {
+  --black: rgb(0,0,0);
+  --beige: rgb(245,245,220);
+  --white: rgb(255,255,255);
+  --text1: #333;
+  --background1: #FEFFEA;
+  --main-color-1: #8a6d3b;
+  --menu-back: #6b522d;
+  --footer-background: #333;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+/* Media Queries */
+@media only screen and (min-width:600px) {
+  .columns {
+      display: flex;
+  }
+  #home-nav{
+      display: flex;
+  }
+  #home-page-img {
+      text-align: center;
+      width: 100%;
+      max-width: 1500px;
+      height: auto;
+      flex-direction: row;
+      flex-wrap: wrap;
+  }
+  #ft-imgs {
+      justify-content: center;
+  }
+}
