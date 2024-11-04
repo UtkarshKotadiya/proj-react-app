@@ -6,9 +6,9 @@ function Header() {
     <header>
       <div className="columns" id="header-div">
         <div id="header-logo">
-          <a href="/"> 
+          <Link to="/">
             <img src={`${process.env.PUBLIC_URL}/proj_imgs/top-logo.png`} alt="Logo" width="500" height="200" /> 
-          </a>
+          </Link>
         </div>
         <div className="columns" id="top-right-menu">
           <img src={`${process.env.PUBLIC_URL}/proj_imgs/login_logo.png`} alt="Login" height="50" width="50" />
@@ -20,3 +20,5 @@ function Header() {
 }
 
 export default Header;
+
+
