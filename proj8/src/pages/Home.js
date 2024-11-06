@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import './Home.css';
+import MainImageSection from '../components/mainimagesection.js';
+
 
 const Home = () => {
   return (
     <div id="main-home-content">
-      <section id="home-page-img">
-        <img src={`${process.env.PUBLIC_URL}/proj_imgs/HP1.5.png`} alt="Left Main" id="left-main-img" />
-        <img src={`${process.env.PUBLIC_URL}/proj_imgs/HP1.png`} alt="Right Main" id="right-main-img" />
-      </section>
+
+      <MainImageSection />
 
       <div id="home-page-content">
         <h1> Featured Products </h1>
