@@ -1,15 +1,24 @@
 import { Link, Outlet } from 'react-router-dom';
+import React, { useState } from 'react';
 import Header from './components/Header';
 import './components/Header.css';
 import './components/Footer.css';
 
 
 const Layout = () => {
+
+  const [isMenuVisible, setMenuVisible] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuVisible(!isMenuVisible);
+  };
+
   return (
     <div>
       <Header />
       <nav id='menu-div'>
-        <ul id="home-nav">
+        <div id="menu-toggle" onClick={toggleMenu}>&#x2630;</div>
+        <ul id="home-nav" className={isMenuVisible ? '' : 'hidden'}>
           <li><Link to="/">HOME</Link></li>
           <li><Link to="/about">ABOUT US</Link></li>
           <li><Link to="/products">PRODUCTS</Link></li>

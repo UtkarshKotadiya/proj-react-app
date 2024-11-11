@@ -1,27 +1,28 @@
 import './Products.css';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Category from '../components/ProductCategory.js';
 
 const Products = () => {
+  const [products, setProducts] = useState({ rings: [], necklaces: [], bracelets: [], watches: [] });
+
+  useEffect(() => {
+      const fetchProducts = async () => {
+          try {
+              const response = await axios.get('https://project-backend-omz4.onrender.com/api/products/');
+              setProducts(response.data);
+          } catch (error) {
+              console.error('Error fetching product data:', error);
+          }
+      };
+      fetchProducts();
+  }, []);
+
   return (
     <div id="main-prod-content">
-      <div id="rings">
-        <h1>RINGS</h1>
-        <div className="products" id="ring-products"></div>
-      </div>
-
-      <div id="necklaces">
-        <h1>NECKLACES</h1>
-        <div className="products" id="necklace-products"></div>    
-      </div>
-
-      <div id="bracelets">
-        <h1>BRACELETS</h1>
-        <div className="products" id="bracelet-products"></div>    
-      </div>
-
-      <div id="watches">
-        <h1>WATCHES</h1>
-        <div className="products" id="watch-products"></div>    
-      </div>
+      {Object.keys(products).map((category) => (
+        <Category key={category} title={category.toUpperCase()} products={products[category]} />
+      ))}
     </div>
   );
 }
