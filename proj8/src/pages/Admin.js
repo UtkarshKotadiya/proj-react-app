@@ -63,7 +63,7 @@ const Admin = () => {
       try {
         await axios.delete(apiEndpoint);
         alert('Product deleted successfully!');
-        window.location.reload(); // Refresh to update the UI
+        window.location.reload();
       } catch (error) {
         console.error('Error deleting product:', error);
         alert('Failed to delete product.');
