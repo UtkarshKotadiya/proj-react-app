@@ -1,5 +1,5 @@
 
-:root {
+/* :root {
     --color1: #fff;
     --color2: #ccc;
     --color3: #f9f9f9;
@@ -67,6 +67,140 @@ h2 {
 
 .form-container input[type="submit"]:hover {
     background-color: #6c522d;
+} */
+
+
+
+
+
+
+:root {
+  --primary-color: #8a6d3b;
+  --secondary-color: #6c522d;
+  --background-color: whitesmoke;
+  --button-hover-color: #e74c3c;
+  --text-color: #333;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+#admin-panel {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background: var(--background-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-color);
+}
+
+#admin-panel h1 {
+  text-align: center;
+  font-size: 2.5em;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+#admin-panel section {
+  margin-bottom: 30px;
+}
+
+#admin-panel h2 {
+  font-size: 1.8em;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 5px;
+}
+
+#admin-panel button:hover {
+  background-color: var(--secondary-color);
+}
+
+.add-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 500px;
+  background: var(--background-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  z-index: 1000;
+  padding: 20px;
+}
+
+.add-dialog h3 {
+  text-align: center;
+  font-size: 1.5em;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.add-dialog form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-dialog form label {
+  font-size: 1em;
+  color: var(--text-color);
+  margin-bottom: 8px;
+}
+
+.add-dialog form input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.add-dialog form button {
+  margin-top: 10px;
+}
+
+.add-dialog button:last-child {
+  background-color: #95a5a6;
+  color: white;
+}
+
+.add-dialog button:last-child:hover {
+  background-color: #7f8c8d;
+}
+
+.add-dialog::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+}
+
+@media (max-width: 768px) {
+  #admin-panel {
+      padding: 20px;
+  }
+
+  #admin-panel h1 {
+      font-size: 2em;
+  }
+
+  #admin-panel h2 {
+      font-size: 1.6em;
+  }
+
+  .add-dialog {
+      padding: 15px;
+  }
+
+  .add-dialog h3 {
+      font-size: 1.2em;
+  }
 }
 
 
@@ -91,157 +225,3 @@ h2 {
 
 
 
-
-
-
-
-
-
-
-/* Scoped styles using #admin-panel */
-/* #admin-panel {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-  }
-  
-  #admin-panel h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 1.5rem;
-  }
-  
-  #admin-panel section {
-    margin-bottom: 2rem;
-  }
-  
-  #admin-panel h2 {
-    color: #444;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 0.5rem;
-  }
-  
-  .category-section {
-    margin-bottom: 1rem;
-  }
-  
-  .category-section h3 {
-    color: #555;
-    margin-bottom: 0.5rem;
-    text-transform: capitalize;
-  }
-  
-  .category-section ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .category-section ul li {
-    background: #f5f5f5;
-    margin: 0.5rem 0;
-    padding: 0.8rem 1rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .category-section ul li button {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .category-section ul li button:hover {
-    background-color: #c0392b;
-  }
-  
-  #admin-panel button {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 0.8rem 1.2rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  #admin-panel button:hover {
-    background-color: #2980b9;
-  }
-  
-  #admin-panel button:disabled {
-    background-color: #95a5a6;
-    cursor: not-allowed;
-  }
-  
-
-  .add-dialog {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 500px;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    padding: 1.5rem;
-  }
-  
-  .add-dialog h3 {
-    margin-bottom: 1rem;
-    color: #333;
-    text-align: center;
-  }
-  
-  .add-dialog form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .add-dialog form label {
-    margin-bottom: 0.8rem;
-    color: #555;
-  }
-  
-  .add-dialog form input {
-    padding: 0.8rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  
-  .add-dialog form button {
-    margin-top: 0.5rem;
-  }
-  
-  .add-dialog button:last-child {
-    background-color: #95a5a6;
-  }
-  
-  .add-dialog button:last-child:hover {
-    background-color: #7f8c8d;
-    }
-
-    .add-dialog::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 999;
-  } */
