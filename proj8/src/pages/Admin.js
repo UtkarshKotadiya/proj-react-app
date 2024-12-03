@@ -3,24 +3,11 @@ import './Admin.css';
 import axios from 'axios';
 
 const Admin = () => {
-  const [products, setProducts] = useState({ rings: [], necklaces: [], bracelets: [], watches: [] });
   const [saleProducts, setSaleProducts] = useState([]);
   const [showAddDialog, setShowAddDialog] = useState(false);
-  const [newProduct, setNewProduct] = useState({});
   const [newSaleProduct, setNewSaleProduct] = useState({});
-  const [isAddingSaleProduct, setIsAddingSaleProduct] = useState(false);
 
   useEffect(() => {
-    // Fetch main products
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get('https://project-backend-omz4.onrender.com/api/products/');
-        setProducts(response.data);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
-
     // Fetch sale products
     const fetchSaleProducts = async () => {
       try {
@@ -31,42 +18,32 @@ const Admin = () => {
       }
     };
 
-    fetchProducts();
     fetchSaleProducts();
   }, []);
 
-  // Handle Add Product or Sale Product
-  const handleAddProduct = async () => {
-    const apiEndpoint = isAddingSaleProduct
-      ? 'https://project-backend-omz4.onrender.com/api/saleproducts'
-      : 'https://project-backend-omz4.onrender.com/api/products';
-    const dataToAdd = isAddingSaleProduct ? newSaleProduct : newProduct;
-
+  // Handle Add Sale Product
+  const handleAddSaleProduct = async () => {
     try {
-      await axios.post(apiEndpoint, dataToAdd);
-      alert('Product added successfully!');
+      const response = await axios.post('https://project-backend-omz4.onrender.com/api/saleproducts', newSaleProduct);
+      alert('Sale product added successfully!');
+      setSaleProducts((prevProducts) => [...prevProducts, response.data]); // Update state without reloading
       setShowAddDialog(false);
-      window.location.reload(); // Refresh to update the UI
     } catch (error) {
-      console.error('Error adding product:', error);
-      alert('Failed to add product.');
+      console.error('Error adding sale product:', error);
+      alert('Failed to add sale product.');
     }
   };
 
-  // Handle Delete Product or Sale Product
-  const handleDelete = async (id, isSaleProduct) => {
-    const apiEndpoint = isSaleProduct
-      ? `https://project-backend-omz4.onrender.com/api/saleproducts/${id}`
-      : `https://project-backend-omz4.onrender.com/api/products/${id}`;
-
-    if (window.confirm('Are you sure you want to delete this product?')) {
+  // Handle Delete Sale Product
+  const handleDeleteSaleProduct = async (id) => {
+    if (window.confirm('Are you sure you want to delete this sale product?')) {
       try {
-        await axios.delete(apiEndpoint);
-        alert('Product deleted successfully!');
-        window.location.reload();
+        await axios.delete(`https://project-backend-omz4.onrender.com/api/saleproducts/${id}`);
+        alert('Sale product deleted successfully!');
+        setSaleProducts((prevProducts) => prevProducts.filter((product) => product._id !== id)); // Update state without reloading
       } catch (error) {
-        console.error('Error deleting product:', error);
-        alert('Failed to delete product.');
+        console.error('Error deleting sale product:', error);
+        alert('Failed to delete sale product.');
       }
     }
   };
@@ -76,68 +53,32 @@ const Admin = () => {
       <h1>Admin Panel</h1>
 
       <section>
-        <h2>Main Products</h2>
-        {Object.keys(products).map((category) => (
-          <div key={category} className="category-section">
-            <h3>{category.toUpperCase()}</h3>
-            <ul>
-              {products[category].map((product) => (
-                <li key={product._id}>
-                  {product.title} - {product.description}{' '}
-                  <button onClick={() => handleDelete(product._id, false)}>Delete</button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-        <button
-          onClick={() => {
-            setShowAddDialog(true);
-            setIsAddingSaleProduct(false);
-          }}
-        >
-          Add Main Product
-        </button>
-      </section>
-
-      <section>
         <h2>Sale Products</h2>
         <ul>
           {saleProducts.map((product) => (
             <li key={product._id}>
               {product.title} - {product.alt}{' '}
-              <button onClick={() => handleDelete(product._id, true)}>Delete</button>
+              <button onClick={() => handleDeleteSaleProduct(product._id)}>Delete</button>
             </li>
           ))}
         </ul>
-        <button
-          onClick={() => {
-            setShowAddDialog(true);
-            setIsAddingSaleProduct(true);
-          }}
-        >
-          Add Sale Product
-        </button>
+        <button onClick={() => setShowAddDialog(true)}>Add Sale Product</button>
       </section>
 
       {showAddDialog && (
         <div className="add-dialog">
-          <h3>{isAddingSaleProduct ? 'Add Sale Product' : 'Add Main Product'}</h3>
+          <h3>Add Sale Product</h3>
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              handleAddProduct();
+              handleAddSaleProduct();
             }}
           >
             <label>
               Title:
               <input
                 type="text"
-                onChange={(e) =>
-                  isAddingSaleProduct
-                    ? setNewSaleProduct({ ...newSaleProduct, title: e.target.value })
-                    : setNewProduct({ ...newProduct, title: e.target.value })
-                }
+                onChange={(e) => setNewSaleProduct({ ...newSaleProduct, title: e.target.value })}
                 required
               />
             </label>
@@ -145,11 +86,7 @@ const Admin = () => {
               Description:
               <input
                 type="text"
-                onChange={(e) =>
-                  isAddingSaleProduct
-                    ? setNewSaleProduct({ ...newSaleProduct, alt: e.target.value })
-                    : setNewProduct({ ...newProduct, description: e.target.value })
-                }
+                onChange={(e) => setNewSaleProduct({ ...newSaleProduct, alt: e.target.value })}
                 required
               />
             </label>
@@ -157,20 +94,15 @@ const Admin = () => {
               Image Path:
               <input
                 type="text"
-                onChange={(e) =>
-                  isAddingSaleProduct
-                    ? setNewSaleProduct({ ...newSaleProduct, src: e.target.value })
-                    : setNewProduct({ ...newProduct, img_name: e.target.value })
-                }
+                onChange={(e) => setNewSaleProduct({ ...newSaleProduct, src: e.target.value })}
                 required
               />
             </label>
-            <button type="submit">Add Product</button>
+            <button type="submit">Add Sale Product</button>
             <button
               type="button"
               onClick={() => {
                 setShowAddDialog(false);
-                setNewProduct({});
                 setNewSaleProduct({});
               }}
             >
