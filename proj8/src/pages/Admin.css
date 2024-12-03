@@ -117,7 +117,7 @@ h2 {
   background-color: var(--secondary-color);
 }
 
-.add-dialog {
+/* .add-dialog {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -179,7 +179,7 @@ h2 {
   height: 100%;
   background: rgba(0, 0, 0, 0.3);
   z-index: 999;
-}
+} */
 
 @media (max-width: 768px) {
   #admin-panel {
