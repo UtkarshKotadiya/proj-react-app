@@ -21,18 +21,37 @@ const Admin = () => {
     fetchSaleProducts();
   }, []);
 
-  // Handle Add Sale Product
-  const handleAddSaleProduct = async () => {
-    try {
-      const response = await axios.post('https://project-backend-omz4.onrender.com/api/saleproducts', newSaleProduct);
-      alert('Sale product added successfully!');
-      setSaleProducts((prevProducts) => [...prevProducts, response.data]); // Update state without reloading
-      setShowAddDialog(false);
-    } catch (error) {
-      console.error('Error adding sale product:', error);
-      alert('Failed to add sale product.');
+  // Handle Add or Edit Sale Product
+const handleSaveSaleProduct = async (_id) => {
+  try {
+    if (newSaleProduct._id) {
+      // Update existing product
+      const response = await axios.put(
+        `https://project-backend-omz4.onrender.com/api/saleproducts/${newSaleProduct._id}`
+      );
+      alert("Sale product updated successfully!");
+      setSaleProducts((prevProducts) =>
+        prevProducts.map((product) =>
+          product._id === newSaleProduct._id ? response.data : product
+        )
+      );
+    } else {
+      // Add new product
+      const response = await axios.post(
+        "https://project-backend-omz4.onrender.com/api/saleproducts/",
+        newSaleProduct
+      );
+      alert("Sale product added successfully!");
+      setSaleProducts((prevProducts) => [...prevProducts, response.data]);
     }
-  };
+    setNewSaleProduct({ title: "", alt: "", src: "" });
+    setShowAddDialog(false);
+  } catch (error) {
+    console.error("Error saving sale product:", error);
+    alert("Failed to save sale product.");
+  }
+};
+
 
   // Handle Delete Sale Product
   const handleDeleteSaleProduct = async (id) => {
@@ -58,6 +77,12 @@ const Admin = () => {
           {saleProducts.map((product) => (
             <li key={product._id}>
               {product.title} - {product.alt}{' '}
+              <button onClick={() => {
+                setNewSaleProduct(product);
+                setShowAddDialog(true);
+              }}>
+                Edit
+              </button>
               <button onClick={() => handleDeleteSaleProduct(product._id)}>Delete</button>
             </li>
           ))}
@@ -71,13 +96,14 @@ const Admin = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              handleAddSaleProduct();
+              handleSaveSaleProduct();
             }}
           >
             <label>
               Title:
               <input
                 type="text"
+                value={newSaleProduct.title}
                 onChange={(e) => setNewSaleProduct({ ...newSaleProduct, title: e.target.value })}
                 required
               />
@@ -86,6 +112,7 @@ const Admin = () => {
               Description:
               <input
                 type="text"
+                value={newSaleProduct.alt}
                 onChange={(e) => setNewSaleProduct({ ...newSaleProduct, alt: e.target.value })}
                 required
               />
@@ -94,16 +121,17 @@ const Admin = () => {
               Image Path:
               <input
                 type="text"
+                value={newSaleProduct.src}
                 onChange={(e) => setNewSaleProduct({ ...newSaleProduct, src: e.target.value })}
                 required
               />
             </label>
-            <button type="submit">Add Sale Product</button>
+            <button type="submit">Save</button>
             <button
               type="button"
               onClick={() => {
                 setShowAddDialog(false);
-                setNewSaleProduct({});
+                setNewSaleProduct({ title: '', alt: '', src: '' });
               }}
             >
               Cancel
