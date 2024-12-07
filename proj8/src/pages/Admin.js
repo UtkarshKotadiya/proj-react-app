@@ -22,13 +22,13 @@ const Admin = () => {
   }, []);
 
   // Handle Add or Edit Sale Product
-const handleSaveSaleProduct = async (_id) => {
+const handleSaveSaleProduct = async () => {
   try {
     if (newSaleProduct._id) {
       // Update existing product
       const response = await axios.put(
-        `https://project-backend-omz4.onrender.com/api/saleproducts/${newSaleProduct._id}`
-      );
+        `https://project-backend-omz4.onrender.com/api/saleproducts/${newSaleProduct._id}`,
+        newSaleProduct);
       alert("Sale product updated successfully!");
       setSaleProducts((prevProducts) =>
         prevProducts.map((product) =>
@@ -36,7 +36,6 @@ const handleSaveSaleProduct = async (_id) => {
         )
       );
     } else {
-      // Add new product
       const response = await axios.post(
         "https://project-backend-omz4.onrender.com/api/saleproducts/",
         newSaleProduct
